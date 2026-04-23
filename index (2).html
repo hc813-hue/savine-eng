@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>savine.ai — GCSE English Specialist</title>
+<meta name="description" content="Your expert GCSE English Language & Literature AI tutor. Quotes, analysis, model answers and essay marking.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ─────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0C1710;
+  --bg2:#111E14;
+  --bg3:#172219;
+  --bg4:#1D2B1F;
+  --panel:#0F1A12;
+  --border:#253328;
+  --border2:#344A37;
+  --border3:#4A6A4E;
+  --cream:#F2EDE0;
+  --cream2:#C4BAA4;
+  --cream3:#8A8072;
+  --cream4:#5A5448;
+  --gold:#C49A1C;
+  --gold2:#E0B030;
+  --gold3:#F5D068;
+  --gold-dim:rgba(196,154,28,0.15);
+  --green:#2A7A4E;
+  --green2:#368F5E;
+  --green3:#4AAF78;
+  --green-dim:rgba(42,122,78,0.2);
+  --red:#B83030;
+  --red2:#D94040;
+  --font-h:'Playfair Display',serif;
+  --font-b:'Source Serif 4',serif;
+  --radius:12px;
+  --shadow:0 8px 32px rgba(0,0,0,0.5);
+}
+html{height:100%;font-size:16px}
+body{height:100%;background:var(--bg);color:var(--cream);font-family:var(--font-b);-webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ── SCROLLBAR ─────────────────────────────────── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--border3)}
+
+/* ── KEY SCREEN ────────────────────────────────── */
+#key-screen{
+  position:fixed;inset:0;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  z-index:100;padding:20px;
+}
+.key-card{
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:20px;padding:48px 44px;max-width:480px;width:100%;
+  box-shadow:var(--shadow);text-align:center;
+}
+.key-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:32px}
+.key-ring{
+  width:52px;height:52px;border:2px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-h);font-size:24px;font-weight:700;color:var(--gold);font-style:italic;
+}
+.key-title{font-family:var(--font-h);font-size:30px;font-weight:600;color:var(--cream)}
+.key-title span{color:var(--gold)}
+.key-sub{font-size:14px;color:var(--cream2);line-height:1.7;margin-bottom:28px}
+.key-label{display:block;font-size:12px;color:var(--cream3);letter-spacing:.1em;text-transform:uppercase;text-align:left;margin-bottom:8px}
+.key-input{
+  width:100%;background:var(--bg3);border:1.5px solid var(--border2);
+  border-radius:10px;padding:12px 16px;font-family:var(--font-b);font-size:14px;
+  color:var(--cream);outline:none;transition:border-color .2s;margin-bottom:16px;
+  letter-spacing:.04em;
+}
+.key-input:focus{border-color:var(--green2)}
+.key-input::placeholder{color:var(--cream4)}
+.key-btn{
+  width:100%;padding:13px;background:var(--gold);border:none;border-radius:10px;
+  font-family:var(--font-h);font-size:15px;font-weight:600;color:var(--bg);
+  cursor:pointer;transition:background .18s;letter-spacing:.02em;
+}
+.key-btn:hover{background:var(--gold2)}
+.key-note{font-size:12px;color:var(--cream4);margin-top:16px;line-height:1.6}
+.key-note a{color:var(--gold);text-decoration:none}
+.key-note a:hover{text-decoration:underline}
+.key-err{font-size:13px;color:var(--red2);margin-bottom:12px;font-style:italic}
+
+/* ── APP SHELL ─────────────────────────────────── */
+#app{height:100vh;display:flex;flex-direction:column}
+
+/* ── HEADER ────────────────────────────────────── */
+.header{
+  background:var(--panel);border-bottom:1px solid var(--border);
+  padding:0 20px;display:flex;align-items:center;gap:14px;
+  height:58px;flex-shrink:0;
+}
+.h-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.h-ring{
+  width:34px;height:34px;border:1.5px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-h);font-size:17px;font-weight:700;color:var(--gold);font-style:italic;
+}
+.h-name{font-family:var(--font-h);font-size:20px;font-weight:600;color:var(--cream)}
+.h-name span{color:var(--gold)}
+.h-tagline{font-size:11px;color:var(--cream3);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+.h-spacer{flex:1}
+.h-badge{
+  border:1px solid var(--border2);border-radius:20px;
+  padding:3px 12px;font-size:10.5px;color:var(--cream3);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.h-key-btn{
+  background:none;border:1px solid var(--border2);border-radius:8px;
+  padding:5px 11px;font-size:12px;color:var(--cream3);cursor:pointer;
+  transition:all .18s;font-family:var(--font-b);
+}
+.h-key-btn:hover{border-color:var(--border3);color:var(--cream2)}
+
+/* ── MODE TABS ──────────────────────────────────── */
+.modes{
+  background:var(--panel);border-bottom:1px solid var(--border);
+  padding:0 20px;display:flex;gap:2px;flex-shrink:0;
+}
+.mode-btn{
+  padding:11px 18px;font-family:var(--font-b);font-size:13.5px;color:var(--cream3);
+  background:none;border:none;border-bottom:2.5px solid transparent;
+  cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:8px;white-space:nowrap;
+}
+.mode-btn:hover{color:var(--cream2)}
+.mode-btn.active{color:var(--gold2);border-bottom-color:var(--gold)}
+
+/* ── BODY ───────────────────────────────────────── */
+.body{flex:1;display:flex;overflow:hidden}
+
+/* ── SIDEBAR ────────────────────────────────────── */
+.sidebar{
+  width:215px;background:var(--panel);border-right:1px solid var(--border);
+  padding:12px 10px;overflow-y:auto;flex-shrink:0;display:flex;flex-direction:column;gap:6px;
+}
+.sb-section{
+  font-size:10px;color:var(--cream4);letter-spacing:.14em;text-transform:uppercase;
+  padding:8px 8px 5px;border-bottom:1px solid var(--border);margin-top:4px;
+}
+.sb-section:first-child{margin-top:0}
+.sb-item{
+  padding:7px 10px;border-radius:8px;font-size:13px;color:var(--cream2);
+  cursor:pointer;transition:all .15s;line-height:1.35;border:1px solid transparent;
+  display:flex;align-items:flex-start;gap:7px;
+}
+.sb-item:hover{background:var(--bg3);border-color:var(--border);color:var(--cream)}
+.sb-item.active{background:var(--gold-dim);border-color:rgba(196,154,28,.35);color:var(--gold2)}
+.sb-dot{width:5px;height:5px;border-radius:50%;background:var(--border3);flex-shrink:0;margin-top:5px}
+.sb-item.active .sb-dot{background:var(--gold)}
+
+/* ── CHAT AREA ──────────────────────────────────── */
+.chat-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.chat-scroll{flex:1;overflow-y:auto;padding:24px 20px;display:flex;flex-direction:column;gap:18px;scroll-behavior:smooth}
+
+/* ── WELCOME ────────────────────────────────────── */
+.welcome{max-width:640px;margin:0 auto;width:100%;padding:10px 0 20px;animation:fadein .4s ease}
+.w-logo{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.w-ring{
+  width:56px;height:56px;border:2px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-h);font-size:26px;font-weight:700;color:var(--gold);font-style:italic;
+}
+.w-title{font-family:var(--font-h);font-size:32px;font-weight:600;color:var(--cream)}
+.w-title em{font-style:italic;color:var(--gold2)}
+.w-sub{font-size:15px;color:var(--cream2);line-height:1.75;margin-bottom:24px;max-width:520px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.feat{
+  background:var(--bg3);border:1px solid var(--border);border-radius:12px;
+  padding:18px 14px;transition:border-color .18s;cursor:pointer;
+}
+.feat:hover{border-color:var(--border3)}
+.feat-icon{font-size:24px;margin-bottom:8px}
+.feat h4{font-family:var(--font-h);font-size:13.5px;color:var(--gold2);margin-bottom:5px}
+.feat p{font-size:12.5px;color:var(--cream3);line-height:1.5}
+.quick-title{font-size:11px;color:var(--cream4);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.quick-chips{display:flex;flex-wrap:wrap;gap:8px}
+.qchip{
+  background:var(--bg3);border:1px solid var(--border);border-radius:20px;
+  padding:7px 14px;font-size:13px;color:var(--cream2);cursor:pointer;
+  transition:all .15s;font-family:var(--font-b);
+}
+.qchip:hover{background:var(--green-dim);border-color:var(--green2);color:var(--cream)}
+
+/* ── MESSAGES ───────────────────────────────────── */
+.msg{display:flex;gap:10px;align-items:flex-start;animation:fadein .25s ease;max-width:100%}
+.msg.user{flex-direction:row-reverse}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.av{
+  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;
+  font-family:var(--font-h);
+}
+.msg.assistant .av{background:var(--green);color:var(--cream);font-style:italic;font-size:16px}
+.msg.user .av{background:var(--bg4);color:var(--cream2);font-size:10.5px;border:1px solid var(--border2);letter-spacing:.05em}
+.bub{
+  max-width:85%;padding:14px 18px;border-radius:18px;
+  font-size:14.5px;line-height:1.85;word-break:break-word;
+}
+.msg.assistant .bub{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:4px 18px 18px 18px;color:var(--cream);
+}
+.msg.user .bub{
+  background:var(--green);color:var(--cream);
+  border-radius:18px 4px 18px 18px;
+}
+.bub p{margin-bottom:10px}.bub p:last-child{margin-bottom:0}
+.bub strong{font-weight:600;color:var(--gold2)}
+.msg.user .bub strong{color:var(--gold3)}
+.bub em{font-style:italic;color:var(--cream2)}
+.msg.user .bub em{color:rgba(242,237,224,.75)}
+.bub h3{
+  font-family:var(--font-h);font-size:16px;font-weight:600;color:var(--gold2);
+  margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border2);
+}
+.bub h4{font-family:var(--font-h);font-size:14.5px;font-weight:600;color:var(--green3);margin:12px 0 6px}
+.bub ul,.bub ol{padding-left:22px;margin:8px 0}
+.bub li{margin-bottom:5px}
+.bub blockquote{
+  border-left:3px solid var(--gold);padding:9px 15px;margin:12px 0;
+  background:rgba(196,154,28,.06);border-radius:0 10px 10px 0;
+  font-style:italic;color:var(--cream2);font-size:14px;
+}
+.bub hr{border:none;border-top:1px solid var(--border2);margin:16px 0}
+.bub code{
+  background:rgba(255,255,255,.07);border-radius:5px;
+  padding:2px 6px;font-size:13px;font-family:'Courier New',monospace;color:var(--green3);
+}
+.bub table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px}
+.bub th{background:var(--bg4);color:var(--gold2);padding:8px 12px;text-align:left;font-weight:500;border:1px solid var(--border2)}
+.bub td{padding:7px 12px;border:1px solid var(--border);color:var(--cream2)}
+.bub tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+
+/* typing dots */
+.typing-dots{display:flex;align-items:center;gap:5px;padding:6px 2px}
+.typing-dots span{width:7px;height:7px;background:var(--green2);border-radius:50%;animation:dot 1.1s infinite}
+.typing-dots span:nth-child(2){animation-delay:.18s}
+.typing-dots span:nth-child(3){animation-delay:.36s}
+@keyframes dot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-8px)}}
+
+.err-txt{color:var(--red2);font-style:italic;font-size:13.5px}
+
+/* ── INPUT BAR ──────────────────────────────────── */
+.input-area{
+  background:var(--panel);border-top:1px solid var(--border);
+  padding:14px 18px;flex-shrink:0;
+}
+.input-hint{font-size:11.5px;color:var(--cream4);margin-bottom:8px}
+.input-row{display:flex;gap:10px;align-items:flex-end}
+textarea.txt-inp{
+  flex:1;background:var(--bg3);border:1.5px solid var(--border2);border-radius:12px;
+  padding:11px 15px;font-family:var(--font-b);font-size:14.5px;color:var(--cream);
+  resize:none;min-height:46px;max-height:180px;outline:none;line-height:1.6;
+  transition:border-color .2s;
+}
+textarea.txt-inp:focus{border-color:var(--green2);background:var(--bg4)}
+textarea.txt-inp::placeholder{color:var(--cream4)}
+textarea.tall-inp{min-height:100px}
+.send-btn{
+  width:46px;height:46px;border-radius:12px;background:var(--green);
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background .18s;
+}
+.send-btn:hover{background:var(--green2)}
+.send-btn:disabled{background:var(--border2);cursor:not-allowed}
+.send-btn svg{width:18px;height:18px}
+
+/* ── MODEL ANSWER FORM ──────────────────────────── */
+.ma-form{background:var(--panel);border-top:1px solid var(--border);padding:14px 18px;flex-shrink:0}
+.form-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.form-row select,.form-row input{
+  flex:1;min-width:140px;background:var(--bg3);border:1.5px solid var(--border2);
+  border-radius:10px;padding:10px 13px;font-family:var(--font-b);font-size:13.5px;
+  color:var(--cream);outline:none;transition:border-color .2s;
+}
+.form-row select:focus,.form-row input:focus{border-color:var(--green2)}
+.form-row select option{background:var(--bg2)}
+.form-row input::placeholder{color:var(--cream4)}
+.form-btn{
+  width:100%;padding:12px;background:var(--gold);border:none;border-radius:10px;
+  font-family:var(--font-h);font-size:14.5px;font-weight:600;color:var(--bg);
+  cursor:pointer;transition:background .18s;letter-spacing:.02em;
+}
+.form-btn:hover{background:var(--gold2)}
+.form-btn:disabled{background:var(--border2);color:var(--cream4);cursor:not-allowed}
+
+/* ── RESPONSIVE ─────────────────────────────────── */
+@media(max-width:768px){
+  .sidebar{display:none}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .bub{max-width:92%;font-size:14px}
+  .h-badge,.h-tagline{display:none}
+}
+@media(max-width:480px){
+  .feat-grid{grid-template-columns:1fr}
+  .modes{padding:0 12px}
+  .mode-btn{padding:10px 12px;font-size:12.5px}
+  .chat-scroll{padding:16px}
+  .input-area,.ma-form{padding:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── KEY SETUP SCREEN ─────────────────────────── -->
+<div id="key-screen">
+  <div class="key-card">
+    <div class="key-logo">
+      <div class="key-ring">S</div>
+      <div>
+        <div style="font-family:var(--font-h);font-size:28px;font-weight:600;color:var(--cream)">savine<span style="color:var(--gold)">.</span>ai</div>
+        <div style="font-size:11px;color:var(--cream3);letter-spacing:.12em;text-transform:uppercase">GCSE English Specialist</div>
+      </div>
+    </div>
+    <p class="key-sub">Your expert AI tutor for GCSE English Language &amp; Literature — quotes, analysis, model answers and essay marking.</p>
+    <label class="key-label">Anthropic API Key</label>
+    <input class="key-input" type="password" id="keyInput" placeholder="sk-ant-api03-…" autocomplete="off">
+    <div class="key-err" id="keyErr" style="display:none"></div>
+    <button class="key-btn" onclick="startApp()">Enter savine.ai →</button>
+    <p class="key-note">
+      Your key is stored only in this browser session and never sent anywhere except the Anthropic API.<br>
+      Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>
+    </p>
+  </div>
+</div>
+
+<!-- ── MAIN APP ──────────────────────────────────── -->
+<div id="app" style="display:none">
+
+  <header class="header">
+    <a class="h-logo" href="#">
+      <div class="h-ring">S</div>
+      <div>
+        <div class="h-name">savine<span>.</span>ai</div>
+        <div class="h-tagline">GCSE English Specialist</div>
+      </div>
+    </a>
+    <div class="h-spacer"></div>
+    <div class="h-badge">Language &amp; Literature</div>
+    <button class="h-key-btn" onclick="changeKey()" title="Change API key">⚙ API Key</button>
+  </header>
+
+  <nav class="modes">
+    <button class="mode-btn active" id="mb-chat" onclick="setMode('chat')">💬 Ask Savine</button>
+    <button class="mode-btn" id="mb-model" onclick="setMode('model')">📝 Model Answer</button>
+    <button class="mode-btn" id="mb-mark" onclick="setMode('mark')">✅ Mark My Work</button>
+  </nav>
+
+  <div class="body">
+
+    <aside class="sidebar">
+      <div class="sb-section">Literature Texts</div>
+      <div class="sb-item" onclick="sbClick('Macbeth')"><div class="sb-dot"></div>Macbeth</div>
+      <div class="sb-item" onclick="sbClick('An Inspector Calls')"><div class="sb-dot"></div>An Inspector Calls</div>
+      <div class="sb-item" onclick="sbClick('A Christmas Carol')"><div class="sb-dot"></div>A Christmas Carol</div>
+      <div class="sb-item" onclick="sbClick('Romeo and Juliet')"><div class="sb-dot"></div>Romeo &amp; Juliet</div>
+      <div class="sb-item" onclick="sbClick('Jekyll and Hyde')"><div class="sb-dot"></div>Jekyll &amp; Hyde</div>
+      <div class="sb-item" onclick="sbClick('Lord of the Flies')"><div class="sb-dot"></div>Lord of the Flies</div>
+      <div class="sb-item" onclick="sbClick('Animal Farm')"><div class="sb-dot"></div>Animal Farm</div>
+      <div class="sb-item" onclick="sbClick('Great Expectations')"><div class="sb-dot"></div>Great Expectations</div>
+      <div class="sb-section">Poetry</div>
+      <div class="sb-item" onclick="sbClick('Power and Conflict poetry cluster — key poems, themes and quotes')"><div class="sb-dot"></div>Power &amp; Conflict</div>
+      <div class="sb-item" onclick="sbClick('Love and Relationships poetry cluster — key poems, themes and quotes')"><div class="sb-dot"></div>Love &amp; Relationships</div>
+      <div class="sb-item" onclick="sbClick('how to compare two poems in an exam — structure, technique and model phrasing')"><div class="sb-dot"></div>Comparing Poems</div>
+      <div class="sb-section">Language Papers</div>
+      <div class="sb-item" onclick="sbClick('AQA English Language Paper 1 — all questions explained with tips')"><div class="sb-dot"></div>AQA Paper 1</div>
+      <div class="sb-item" onclick="sbClick('AQA English Language Paper 2 — all questions explained with tips')"><div class="sb-dot"></div>AQA Paper 2</div>
+      <div class="sb-item" onclick="sbClick('how to write outstanding descriptive writing for Paper 1 Question 5')"><div class="sb-dot"></div>Descriptive Writing</div>
+      <div class="sb-item" onclick="sbClick('how to write persuasive writing for Paper 2 Question 5')"><div class="sb-dot"></div>Persuasive Writing</div>
+      <div class="sb-section">Exam Skills</div>
+      <div class="sb-item" onclick="sbClick('how to write a perfect PEEL paragraph with examples')"><div class="sb-dot"></div>PEEL Paragraphs</div>
+      <div class="sb-item" onclick="sbClick('essential language and structural devices for GCSE English with examples')"><div class="sb-dot"></div>Language Devices</div>
+      <div class="sb-item" onclick="sbClick('how to use context effectively in Literature essays')"><div class="sb-dot"></div>Using Context</div>
+      <div class="sb-item" onclick="sbClick('top tips for achieving Grade 9 in GCSE English Language and Literature')"><div class="sb-dot"></div>Grade 9 Tips</div>
+    </aside>
+
+    <div class="chat-wrap">
+      <div class="chat-scroll" id="chat">
+
+        <div class="welcome" id="welcome">
+          <div class="w-logo">
+            <div class="w-ring">S</div>
+            <div>
+              <div class="w-title">savine<em>.</em>ai</div>
+              <div style="font-size:12px;color:var(--cream3);letter-spacing:.1em;text-transform:uppercase;margin-top:2px">GCSE English Specialist</div>
+            </div>
+          </div>
+          <p class="w-sub">Your expert AI tutor for GCSE English Language &amp; Literature. I give specific quotes, detailed analysis, full model answers, and mark your essays with proper feedback.</p>
+          <div class="feat-grid">
+            <div class="feat" onclick="setMode('chat')">
+              <div class="feat-icon">💬</div>
+              <h4>Ask Anything</h4>
+              <p>Quotes, themes, context, devices, exam technique</p>
+            </div>
+            <div class="feat" onclick="setMode('model')">
+              <div class="feat-icon">📝</div>
+              <h4>Model Answers</h4>
+              <p>Full Grade 9 exemplar essays with annotations</p>
+            </div>
+            <div class="feat" onclick="setMode('mark')">
+              <div class="feat-icon">✅</div>
+              <h4>Mark My Work</h4>
+              <p>Grade, AO breakdown, and improvements</p>
+            </div>
+          </div>
+          <div class="quick-title">Quick Start</div>
+          <div class="quick-chips">
+            <div class="qchip" onclick="qs('What are the key quotes and themes in Macbeth?')">Macbeth quotes</div>
+            <div class="qchip" onclick="qs('How do I analyse a poem using SMILE?')">SMILE technique</div>
+            <div class="qchip" onclick="qs('Explain the themes in An Inspector Calls')">An Inspector Calls</div>
+            <div class="qchip" onclick="qs('What language devices must I know for GCSE?')">Language devices</div>
+            <div class="qchip" onclick="qs('How do I write a Grade 9 essay introduction?')">Essay intros</div>
+            <div class="qchip" onclick="qs('Give me the most important Power and Conflict poems with key quotes')">Power &amp; Conflict</div>
+            <div class="qchip" onclick="qs('How should I structure a literature essay to get full marks?')">Essay structure</div>
+            <div class="qchip" onclick="qs('What does AQA Paper 1 Question 4 require?')">AQA Paper 1 Q4</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Chat input -->
+      <div class="input-area" id="inp-chat">
+        <div class="input-row">
+          <textarea class="txt-inp" id="chatTxt" placeholder="Ask about any text, poem, technique or exam skill…" rows="1" oninput="resize(this)" onkeydown="chatKey(event)"></textarea>
+          <button class="send-btn" id="chatBtn" onclick="chatSend()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+        <div style="font-size:11px;color:var(--cream4);margin-top:7px;text-align:center">Enter to send · Shift+Enter for new line</div>
+      </div>
+
+      <!-- Model answer form -->
+      <div class="ma-form" id="inp-model" style="display:none">
+        <div class="form-row">
+          <select id="ma-text">
+            <option value="">Select a text…</option>
+            <option>Macbeth</option><option>Romeo and Juliet</option><option>An Inspector Calls</option>
+            <option>A Christmas Carol</option><option>Jekyll and Hyde</option><option>Lord of the Flies</option>
+            <option>Animal Farm</option><option>Great Expectations</option><option>Of Mice and Men</option>
+            <option>Power and Conflict poem</option><option>Love and Relationships poem</option>
+            <option>English Language Paper 1</option><option>English Language Paper 2</option>
+          </select>
+          <select id="ma-grade">
+            <option value="">Target grade…</option>
+            <option>Grade 9</option><option>Grade 8</option><option>Grade 7</option>
+            <option>Grade 6</option><option>Grade 5</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <input type="text" id="ma-q" placeholder="Enter the essay question or topic (e.g. How does Dickens present poverty in A Christmas Carol?)">
+        </div>
+        <button class="form-btn" id="maBtn" onclick="modelSend()">✨ Generate Model Answer</button>
+      </div>
+
+      <!-- Mark my work input -->
+      <div class="input-area" id="inp-mark" style="display:none">
+        <div class="input-hint">📋 Paste your essay or paragraph — Savine will grade it and give detailed feedback</div>
+        <div class="input-row">
+          <textarea class="txt-inp tall-inp" id="markTxt" placeholder="Paste your essay, paragraph or response here. Include the question if you have it for more accurate marking…" rows="4" oninput="resize(this)"></textarea>
+          <button class="send-btn" id="markBtn" onclick="markSend()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONSTANTS ──────────────────────────────────────
+const API_URL = 'https://api.anthropic.com/v1/messages';
+const MODEL   = 'claude-sonnet-4-5';
+
+const SYS_CHAT = `You are savine.ai — the world's most expert GCSE English Language and Literature tutor. You are warm, brilliant, encouraging, and deeply knowledgeable. You help students understand, analyse and excel in their GCSEs.
+
+LITERATURE expertise: Macbeth, Romeo & Juliet, An Inspector Calls, A Christmas Carol, Jekyll and Hyde, Lord of the Flies, Animal Farm, Blood Brothers, Great Expectations, Of Mice and Men. All AQA/Edexcel/OCR poetry clusters including Power & Conflict, Love & Relationships, and Conflict.
+
+LANGUAGE expertise: AQA Paper 1 and Paper 2 (all question types), descriptive writing, narrative writing, persuasive writing, viewpoint writing. Reading analysis questions including language analysis, structure, evaluation and comparison.
+
+SKILLS expertise: PEEL/PETAL/PEA paragraphs, literary analysis, language devices (metaphor, simile, personification, sibilance, juxtaposition, enjambment, caesura, volta, semantic field, pathetic fallacy, dramatic irony, foreshadowing etc.), essay structure, AO1/AO2/AO3/AO4 mark schemes, exam technique, grade descriptors.
+
+Formatting rules:
+- Give SPECIFIC QUOTES from texts — always in "quotation marks" with reference (Act/Scene for plays, stanza for poems)
+- Explain the effect of quotes on the reader/audience/viewer
+- Use **bold** for key terms, techniques and important phrases
+- Use ### for main section headings
+- Use > for extended quotes (more than a few words)
+- Use bullet points for lists of points
+- Use PEEL structure when demonstrating analysis
+- Include historical/social CONTEXT where relevant
+- Always explain WHAT, HOW and WHY (what the writer does, how they do it, why/what effect)
+- Be warm and encouraging — celebrate good questions
+- When asked about a text, always include: themes, key quotes with analysis, character analysis, context, and exam tips`;
+
+const SYS_MODEL = `You are savine.ai — an expert GCSE English examiner and tutor generating high-quality model answers.
+
+Structure your response as follows:
+
+### Planning Notes
+Brief thesis statement and 3 main argument points (2-3 lines max)
+
+### Model Answer
+
+Write a full, high-quality essay with:
+
+**Introduction** — Open with a clear thesis that directly addresses the question. Mention the writer's name and key technique/theme. (2-3 sentences)
+
+**Paragraph 1, 2, 3** — Each paragraph must be a perfect PEEL structure:
+- **Point**: A clear argument linked to the question
+- **Evidence**: A specific quote in "quotation marks" with reference
+- **Explanation**: Detailed analysis of language/structure/form — zoom in on specific words, explain the connotations and effect on the reader
+- **Link**: How this connects back to the question and writer's intent
+
+**Conclusion** — Answer the question directly, zoom out to context/theme, explain why it matters
+
+Rules:
+- All quotes must be accurate and in "quotation marks" with reference
+- Use > for any quote longer than 5 words
+- Analyse specific WORDS not just whole quotes — zoom in
+- Include relevant historical/social/literary context (AO3)
+- Use **bold** for key analytical phrases so they stand out
+- Use ### for paragraph headings
+- Write at the target grade level requested
+
+### ✏️ Examiner Commentary
+Explain in 4-5 bullet points exactly why this answer achieves the target grade, referencing specific AOs and what the examiner is rewarding.`;
+
+const SYS_MARK = `You are savine.ai — an experienced GCSE English examiner. Mark the student's work rigorously but supportively.
+
+Your marking report must follow this exact structure:
+
+### 📊 Overall Grade
+State the grade (1-9) prominently. Give the mark out of the maximum (e.g. 30/40). Write 2-3 sentences explaining why this grade was awarded, referencing the mark scheme.
+
+### ✅ What Works Well
+List exactly 4 specific strengths. For each one:
+- Quote directly from the student's work
+- Explain WHY it works and which AO it satisfies
+- Be specific, not vague
+
+### ❌ Areas to Improve
+List exactly 4 specific improvements. For each one:
+- Identify the exact weakness with a quote from their work
+- Explain what's missing or wrong
+- Show them how to fix it with a rewritten example
+
+### 📋 Assessment Objective Breakdown
+For Literature essays: AO1 (relevant textual references and quotations), AO2 (language/structure/form analysis), AO3 (context), AO4 (spelling/punctuation/grammar)
+For Language: AO5 (communication and organisation), AO6 (vocabulary, grammar, spelling)
+Give each AO a score out of its maximum and a one-sentence comment.
+
+### 🔄 Improved Paragraph
+Take their WEAKEST paragraph. Show:
+**Their version:** (quote it)
+**Improved version:** (rewrite it to the next grade up)
+**What changed:** (bullet point the specific improvements)
+
+### 🎯 To Reach the Next Grade
+3 precise, actionable tips specific to THEIR work that would push them one grade higher.
+
+Be honest but kind. Always find genuine positives. Use **bold** for key feedback. Remember students may be anxious about their work.`;
+
+// ── STATE ──────────────────────────────────────────
+let apiKey = '';
+let history = [];
+let busy    = false;
+let mode    = 'chat';
+
+// ── KEY SETUP ──────────────────────────────────────
+function startApp() {
+  const k = document.getElementById('keyInput').value.trim();
+  const err = document.getElementById('keyErr');
+  if (!k) { showErr(err, 'Please enter your Anthropic API key.'); return; }
+  if (!k.startsWith('sk-ant-')) { showErr(err, 'That doesn\'t look like a valid Anthropic key (should start with sk-ant-).'); return; }
+  err.style.display = 'none';
+  apiKey = k;
+  sessionStorage.setItem('sav_key', k);
+  document.getElementById('key-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('chatTxt').focus();
+}
+function showErr(el, msg) { el.textContent = msg; el.style.display = 'block'; }
+function changeKey() {
+  apiKey = ''; sessionStorage.removeItem('sav_key');
+  document.getElementById('key-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('keyInput').value = '';
+  document.getElementById('keyErr').style.display = 'none';
+}
+// Restore key from session
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = sessionStorage.getItem('sav_key');
+  if (saved && saved.startsWith('sk-ant-')) {
+    apiKey = saved;
+    document.getElementById('key-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+  }
+  document.getElementById('keyInput').addEventListener('keydown', e => { if (e.key === 'Enter') startApp(); });
+});
+
+// ── MODE SWITCHING ─────────────────────────────────
+function setMode(m) {
+  mode = m;
+  ['chat','model','mark'].forEach(x => {
+    document.getElementById('mb-'+x).classList.toggle('active', x === m);
+    const el = document.getElementById('inp-'+x);
+    if (el) el.style.display = x === m ? '' : 'none';
+  });
+  const inp = m === 'chat' ? document.getElementById('chatTxt')
+            : m === 'mark' ? document.getElementById('markTxt') : null;
+  if (inp) setTimeout(() => inp.focus(), 50);
+}
+
+function sbClick(topic) {
+  if (mode !== 'chat') setMode('chat');
+  document.getElementById('chatTxt').value = 'Tell me about ' + topic;
+  chatSend();
+}
+function qs(text) {
+  setMode('chat');
+  document.getElementById('chatTxt').value = text;
+  chatSend();
+}
+
+// ── RESIZE TEXTAREA ────────────────────────────────
+function resize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 180) + 'px';
+}
+function chatKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); chatSend(); } }
+
+// ── DOM HELPERS ────────────────────────────────────
+function hideWelcome() {
+  const w = document.getElementById('welcome');
+  if (w) w.remove();
+}
+function addMsg(role, html, isTyping) {
+  hideWelcome();
+  const chat = document.getElementById('chat');
+  const wrap = document.createElement('div');
+  wrap.className = 'msg ' + role;
+  if (isTyping) wrap.id = 'typing-row';
+  const av = document.createElement('div');
+  av.className = 'av';
+  av.textContent = role === 'assistant' ? 'S' : 'You';
+  const bub = document.createElement('div');
+  bub.className = 'bub';
+  bub.innerHTML = html;
+  wrap.appendChild(av);
+  wrap.appendChild(bub);
+  chat.appendChild(wrap);
+  chat.scrollTop = chat.scrollHeight;
+  return bub;
+}
+function userHtml(t) {
+  return '<p>' + t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>') + '</p>';
+}
+function showTyping() {
+  addMsg('assistant', '<div class="typing-dots"><span></span><span></span><span></span></div>', true);
+}
+
+// ── MARKDOWN RENDERER ──────────────────────────────
+function md(raw) {
+  let s = raw
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;');
+  // headings
+  s = s.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  s = s.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
+  // bold / italic
+  s = s.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // code
+  s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // blockquotes
+  s = s.replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>');
+  // hr
+  s = s.replace(/^---+$/gm, '<hr>');
+  // lists
+  s = s.replace(/^\d+\. (.+)$/gm, '<li class="ol-li">$1</li>');
+  s = s.replace(/^[-*] (.+)$/gm, '<li>$1</li>');
+  // wrap list groups
+  s = s.replace(/((?:<li class="ol-li">.*<\/li>\n?)+)/g, '<ol>$1</ol>');
+  s = s.replace(/((?:<li>(?!class).*<\/li>\n?)+)/g, '<ul>$1</ul>');
+  s = s.replace(/class="ol-li"/g,'');
+  s = s.replace(/<\/ul>\s*<ul>/g,'').replace(/<\/ol>\s*<ol>/g,'');
+  // paragraphs
+  const blocks = s.split(/\n{2,}/);
+  s = blocks.map(b => {
+    b = b.trim(); if (!b) return '';
+    if (/^<(h[34]|ul|ol|blockquote|hr|table)/.test(b)) return b;
+    b = b.replace(/\n/g, '<br>');
+    return '<p>' + b + '</p>';
+  }).filter(Boolean).join('');
+  return s;
+}
+
+// ── API CALL ────────────────────────────────────────
+async function callAPI(system, messages, btnId) {
+  document.getElementById(btnId).disabled = true;
+  busy = true;
+  showTyping();
+  let reply = null;
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({ model: MODEL, max_tokens: 2048, system, messages })
+    });
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e?.error?.message || 'HTTP ' + res.status);
+    }
+    const data = await res.json();
+    reply = (data.content || []).filter(c => c.type === 'text').map(c => c.text).join('');
+    document.getElementById('typing-row')?.remove();
+    if (reply) addMsg('assistant', md(reply));
+    else throw new Error('Empty response from API');
+  } catch (e) {
+    document.getElementById('typing-row')?.remove();
+    addMsg('assistant', '<p class="err-txt">⚠ ' + e.message + '</p><p class="err-txt" style="margin-top:6px;font-size:13px">Check your API key is valid and has credit.</p>');
+  }
+  busy = false;
+  document.getElementById(btnId).disabled = false;
+  return reply;
+}
+
+// ── CHAT ────────────────────────────────────────────
+async function chatSend() {
+  if (busy) return;
+  const inp = document.getElementById('chatTxt');
+  const txt = inp.value.trim();
+  if (!txt) return;
+  inp.value = ''; inp.style.height = 'auto';
+  addMsg('user', userHtml(txt));
+  history.push({ role: 'user', content: txt });
+  const reply = await callAPI(SYS_CHAT, history, 'chatBtn');
+  if (reply) history.push({ role: 'assistant', content: reply });
+}
+
+// ── MODEL ANSWER ────────────────────────────────────
+async function modelSend() {
+  if (busy) return;
+  const text  = document.getElementById('ma-text').value;
+  const grade = document.getElementById('ma-grade').value || 'Grade 9';
+  const q     = document.getElementById('ma-q').value.trim();
+  if (!q) { alert('Please enter the essay question or topic.'); return; }
+  const prompt = `Generate a ${grade} model answer${text ? ' for ' + text : ''} for this GCSE English question:\n\n"${q}"`;
+  addMsg('user', userHtml(`📝 Model Answer Request\n\nText: ${text || 'Not specified'}\nGrade: ${grade}\nQuestion: "${q}"`));
+  await callAPI(SYS_MODEL, [{ role: 'user', content: prompt }], 'maBtn');
+}
+
+// ── MARK MY WORK ────────────────────────────────────
+async function markSend() {
+  if (busy) return;
+  const work = document.getElementById('markTxt').value.trim();
+  if (!work || work.length < 40) { alert('Please paste your essay or paragraph (at least a few sentences).'); return; }
+  addMsg('user', '<p style="color:var(--cream3);font-size:13px;margin-bottom:8px">✅ Work submitted for marking</p><p style="font-size:13.5px">' + work.substring(0,200).replace(/&/g,'&amp;').replace(/</g,'&lt;') + (work.length > 200 ? '…' : '') + '</p>');
+  await callAPI(SYS_MARK, [{ role: 'user', content: 'Please mark this GCSE English work:\n\n' + work }], 'markBtn');
+}
+</script>
+</body>
+</html>
